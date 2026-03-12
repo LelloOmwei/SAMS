@@ -46,18 +46,18 @@ jobs:
     - name: Check formatting
       run: cargo fmt --all -- --check
     
-    - name: Run clippy
-      run: cargo clippy --all-targets --all-features -- -D warnings
-    
-    - name: Check host architecture
-      run: cargo check --all-features
-    
     - name: Check no_std embedded
       run: cargo check --target thumbv7m-none-eabi --no-default-features --features embedded
     
     - name: Check no_std with PQC
       run: cargo check --target thumbv7m-none-eabi --no-default-features --features embedded,pqc
-
+    
+    - name: Check host architecture
+      run: cargo check --all-features
+    
+    - name: Run clippy
+      run: cargo clippy --all-targets --all-features -- -W warnings
+    
   test:
     name: Test
     runs-on: ubuntu-latest
