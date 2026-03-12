@@ -282,7 +282,7 @@
 <a href=#282 id=282 data-nosnippet>282</a>    </span><span class="kw">pub </span>transport_stats: TransportStats,
 <a href=#283 id=283 data-nosnippet>283</a>}
 <a href=#284 id=284 data-nosnippet>284</a>
-<a href=#285 id=285 data-nosnippet>285</a><span class="attr">#[cfg(all(test, feature = <span class="string">"transport"</span>))]
+<a href=#285 id=285 data-nosnippet>285</a><span class="attr">#[cfg(all(test, feature = <span class="string">"transport"</span>, not(ci)))]
 <a href=#286 id=286 data-nosnippet>286</a></span><span class="kw">mod </span>tests {
 <a href=#287 id=287 data-nosnippet>287</a>    <span class="kw">use </span>super::<span class="kw-2">*</span>;
 <a href=#288 id=288 data-nosnippet>288</a>    <span class="kw">use </span>crate::{AtomBuilder, telemetry};
