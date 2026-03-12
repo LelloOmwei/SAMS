@@ -137,7 +137,7 @@ pub mod time {
     pub fn format_timestamp_us(us: TimestampUs) -> String {
         use chrono::{DateTime, Utc};
         DateTime::from_timestamp_micros(us as i64)
-            .map_or("Invalid timestamp".to_string(), |dt| {
+            .map_or("Invalid timestamp".to_string(), |dt: DateTime<Utc>| {
                 dt.format("%Y-%m-%dT%H:%M:%S%.6fZ").to_string()
             })
     }
@@ -147,7 +147,7 @@ pub mod time {
     pub fn parse_timestamp_us(s: &str) -> TimestampUs {
         use chrono::{DateTime, Utc};
         s.parse::<DateTime<Utc>>()
-            .map_or(0, |dt| dt.timestamp_micros() as TimestampUs)
+            .map_or(0, |dt: DateTime<Utc>| dt.timestamp_micros() as TimestampUs)
     }
 
     /// Calculate duration between two timestamps

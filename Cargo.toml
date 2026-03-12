@@ -19,12 +19,13 @@ heapless = "0.8"
 
 # Optional std dependencies
 zenoh = { version = "0.11", optional = true }
+chrono = { version = "0.4", optional = true }
 sha2 = { version = "0.10", default-features = false, optional = true }
 hmac = { version = "0.12", default-features = false, optional = true }
 
 [features]
 default = ["std"]
-std = ["serde/std", "zenoh", "sha2/std", "hmac/std"]
+std = ["serde/std", "zenoh", "sha2/std", "hmac/std", "chrono"]
 embedded = ["serde/derive"]
 pqc = ["sha2", "hmac"]
 transport = ["zenoh"]

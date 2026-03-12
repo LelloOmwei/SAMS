@@ -49,7 +49,7 @@
 //!
 //! ```rust, no_run
 //! #![no_std]
-//! use sams::{AtomBuilder, Shield, AnonymizationLevel};
+//! use sams::{AtomBuilder, Shield, AnonymizationLevel, transmit_atom};
 //!
 //! // Create and protect an atom
 //! let mut atom = AtomBuilder::new()
@@ -58,8 +58,7 @@
 //!     .telemetry_type(0x0006)
 //!     .build();
 //!
-//! // Apply anonymization
-//! let shield = Shield::new();
+//! let mut shield = Shield::new();
 //! shield.anonymize_atom(&mut atom)?;
 //!
 //! // Transmit atom (zero-copy)
@@ -69,18 +68,19 @@
 //! ### Linux (std)
 //!
 //! ```rust, no_run
-//! use sams::{ZenohTransport, AtomBuilder};
+//! use sams::{AtomBuilder, telemetry};
 //!
 //! #[tokio::main]
 //! async fn main() -> Result<(), Box<dyn std::error::Error>> {
 //!     // Initialize transport
-//!     let transport = ZenohTransport::new().await?;
+//!     let transport: /* ZenohTransport */ = ZenohTransport::new().await?;
 //!
 //!     // Create and publish atom
 //!     let atom = AtomBuilder::new()
 //!         .entity_id(123)
-//!         .value(22.5) // Temperature in Celsius
-//!         .build();
+//!         .telemetry_type(telemetry::TEMPERATURE_C)
+//!         .value(25.3)
+//!         .build_now();
 //!
 //!     transport.publish_atom("sensors/temperature", &atom).await?;
 //!     Ok(())

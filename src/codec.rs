@@ -5,9 +5,6 @@
 
 use crate::{Result, SemanticAtom, ATOM_SIZE};
 
-#[cfg(feature = "std")]
-use std::error::Error;
-
 /// Codec error types
 #[derive(Debug, Clone, PartialEq)]
 pub enum CodecError {
@@ -107,7 +104,7 @@ impl AtomCodec {
     pub fn encode_atoms(&self, atoms: &[SemanticAtom], buffer: &mut [u8]) -> Result<usize> {
         let total_size = atoms.len() * ATOM_SIZE;
         if buffer.len() < total_size {
-            return Err("Buffer overflow");
+            return Err("Buffer overflow".into());
         }
 
         for (i, atom) in atoms.iter().enumerate() {
@@ -122,7 +119,7 @@ impl AtomCodec {
     /// Decode multiple atoms from a buffer
     pub fn decode_atoms<'a>(&self, buffer: &'a [u8]) -> Result<&'a [SemanticAtom]> {
         if buffer.len() % ATOM_SIZE != 0 {
-            return Err("Invalid atom size");
+            return Err("Invalid atom size".into());
         }
 
         let atom_count = buffer.len() / ATOM_SIZE;
@@ -140,7 +137,7 @@ impl AtomCodec {
     /// Create an atom iterator over a buffer
     pub fn iter_atoms<'a>(&'a self, buffer: &'a [u8]) -> Result<AtomIterator<'a>> {
         if buffer.len() % ATOM_SIZE != 0 {
-            return Err("Invalid atom size");
+            return Err("Invalid atom size".into());
         }
         Ok(AtomIterator::new(buffer, self))
     }
@@ -261,7 +258,7 @@ impl<'a> DecodedAtom<'a> {
     /// Create a new decoded atom from raw data
     fn new(data: &'a [u8]) -> Result<Self> {
         if data.len() < ATOM_SIZE {
-            return Err("Invalid atom size");
+            return Err("Invalid atom size".into());
         }
 
         Ok(Self {
@@ -275,7 +272,7 @@ impl<'a> DecodedAtom<'a> {
 
     /// Get reference to the atom (zero-copy)
     pub fn as_atom(&self) -> Result<&SemanticAtom> {
-        SemanticAtom::from_bytes(self.atom_data)
+        Ok(SemanticAtom::from_bytes(self.atom_data)?)
     }
 
     /// Get mutable copy of the atom
@@ -290,7 +287,7 @@ impl<'a> DecodedAtom<'a> {
         
         if let Some(expected) = self.metadata.expected_checksum {
             if calculated != expected {
-                return Err("Checksum mismatch");
+                return Err("Checksum mismatch".into());
             }
         }
         

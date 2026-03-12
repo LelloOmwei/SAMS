@@ -62,18 +62,18 @@
 /// ## Usage Examples
 ///
 /// ```rust, no_run
-/// use sams::{AtomBuilder, telemetry};
+/// use sams::{AtomBuilder, types::telemetry};
 ///
 /// // Create a temperature atom
 /// let atom = AtomBuilder::new()
 ///     .entity_id(0x00010002) // Temperature sensor
-///     .telemetry_type(telemetry::TEMPERATURE_C)
+///     .telemetry_type(types::telemetry::TEMPERATURE_C)
 ///     .value(22.5) // 22.5°C
 ///     .build();
 ///
 /// // Access atom fields
 /// assert_eq!(atom.entity_id(), 0x00010002);
-/// assert_eq!(atom.telemetry_type(), telemetry::TEMPERATURE_C);
+/// assert_eq!(atom.telemetry_type(), types::telemetry::TEMPERATURE_C);
 /// assert_eq!(atom.get_value(), 22.5);
 /// ```
 
