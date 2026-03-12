@@ -37,6 +37,10 @@ jobs:
     - name: Install targets
       run: rustup target add thumbv7m-none-eabi thumbv8m.main-none-eabihf
     
+    - name: Install dependencies (Linux)
+      if: runner.os == 'Linux'
+      run: sudo apt-get update && sudo apt-get install -y libudev-dev pkg-config
+    
     - name: Cache dependencies
       uses: actions/cache@v4
       with:
@@ -83,6 +87,10 @@ jobs:
     - name: Install targets
       run: rustup target add thumbv7m-none-eabi thumbv8m.main-none-eabihf
     
+    - name: Install dependencies (Linux)
+      if: runner.os == 'Linux'
+      run: sudo apt-get update && sudo apt-get install -y libudev-dev pkg-config
+    
     - name: Cache dependencies
       uses: actions/cache@v4
       with:
@@ -119,6 +127,10 @@ jobs:
     
     - name: Install targets
       run: rustup target add ${{ matrix.target }}
+    
+    - name: Install dependencies (Linux)
+      if: runner.os == 'Linux'
+      run: sudo apt-get update && sudo apt-get install -y libudev-dev pkg-config
     
     - name: Cache dependencies
       uses: actions/cache@v4

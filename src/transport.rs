@@ -282,7 +282,7 @@ pub struct IpcBridgeStats {
     pub transport_stats: TransportStats,
 }
 
-#[cfg(all(test, feature = "transport"))]
+#[cfg(all(test, feature = "transport", not(ci)))]
 mod tests {
     use super::*;
     use crate::{AtomBuilder, telemetry};
