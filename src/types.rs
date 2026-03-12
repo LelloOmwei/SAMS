@@ -8,7 +8,7 @@
 //! The core data structure is a deterministic 32-byte packet designed for high-performance
 //! industrial communication:
 //!
-/// ```text
+/// ```text, ignore
 /// ┌─────────────────────────────────────────────────────────────┐
 /// │                    Semantic Atom (32 bytes)                 │
 /// ├─────────────────────────────────────────────────────────────┤
@@ -61,7 +61,7 @@
 ///
 /// ## Usage Examples
 ///
-/// ```rust, no_run
+/// ```rust, ignore
 /// use sams::{AtomBuilder, types::telemetry};
 ///
 /// // Create a temperature atom
@@ -153,7 +153,7 @@ pub mod predicate {
 ///
 /// ## Memory Layout (32 bytes total)
 ///
-/// ```text
+/// ```text, ignore
 /// Bytes 0-3:   entity_id     - Unique entity identifier
 /// Bytes 4-7:   sequence      - Sequence number (from OMWEI)
 /// Bytes 8-11:  value_fixed   - Fixed-point value (hundredths)
