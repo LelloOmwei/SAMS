@@ -414,7 +414,7 @@ pub struct BatchResult {
     pub data_len: usize,
 }
 
-#[cfg(test)]
+#[cfg(all(test, feature = "std"))]
 mod tests {
     use super::*;
     use crate::{AtomBuilder, telemetry};

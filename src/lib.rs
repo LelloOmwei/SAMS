@@ -184,7 +184,7 @@ pub const ATOM_SIZE: usize = 32;
 /// Fixed-point precision (hundredths)
 pub const FIXED_POINT_PRECISION: u32 = 100;
 
-#[cfg(test)]
+#[cfg(all(test, feature = "std"))]
 mod tests {
     use super::*;
 
