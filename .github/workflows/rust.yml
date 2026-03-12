@@ -27,6 +27,7 @@ jobs:
       with:
         toolchain: ${{ matrix.rust }}
         components: rustfmt, clippy
+        targets: thumbv7m-none-eabi, thumbv8m.main-none-eabihf
     
     - name: Cache dependencies
       uses: actions/cache@v4
@@ -49,14 +50,10 @@ jobs:
       run: cargo check --all-features
     
     - name: Check no_std embedded
-      run: |
-        rustup target add thumbv7m-none-eabi
-        cargo check --target thumbv7m-none-eabi --no-default-features --features embedded
+      run: cargo check --target thumbv7m-none-eabi --no-default-features --features embedded
     
     - name: Check no_std with PQC
-      run: |
-        rustup target add thumbv7m-none-eabi
-        cargo check --target thumbv7m-none-eabi --no-default-features --features embedded,pqc
+      run: cargo check --target thumbv7m-none-eabi --no-default-features --features embedded,pqc
 
   test:
     name: Test
@@ -73,6 +70,7 @@ jobs:
       uses: dtolnay/rust-toolchain@master
       with:
         toolchain: ${{ matrix.rust }}
+        targets: thumbv7m-none-eabi, thumbv8m.main-none-eabihf
     
     - name: Cache dependencies
       uses: actions/cache@v4
@@ -89,9 +87,7 @@ jobs:
       run: cargo test --all-features
     
     - name: Run tests (no_std)
-      run: |
-        rustup target add thumbv7m-none-eabi
-        cargo test --target thumbv7m-none-eabi --no-default-features --features embedded
+      run: cargo test --target thumbv7m-none-eabi --no-default-features --features embedded
 
   build:
     name: Build
