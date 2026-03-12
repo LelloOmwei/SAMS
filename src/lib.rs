@@ -157,8 +157,8 @@
 //! Licensed under either [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0) or [MIT](https://opensource.org/licenses/MIT) at your option.
 
 pub mod types;
-pub mod shield;
-pub mod codec;
+// pub mod shield;  // TODO: Re-enable for Milestone T2
+// pub mod codec;   // TODO: Re-enable for Milestone T3
 
 #[cfg(feature = "transport")]
 pub mod transport;
@@ -166,7 +166,7 @@ pub mod transport;
 pub mod utils;
 
 // Re-export core types for convenience
-pub use types::{SemanticAtom, AtomBuilder, EntityId, TelemetryType, TrustLevel};
+pub use types::{SemanticAtom, EntityId, TelemetryType, TrustLevel};
 
 /// Result type for SAMS operations
 #[cfg(feature = "std")]

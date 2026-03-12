@@ -8,14 +8,118 @@
 
 A memory-safe, 32-byte Semantic Atom Management Stack for industrial IPC. Provides zero-copy serialization, PQC security, and unified APIs across embedded and Linux systems.
 
+## � Project Status: **Work in Progress**
+
+This repository represents the **foundation phase** of the SAMS project, aligned with the NLnet milestones. The core 32-byte Semantic Atom structure is complete and ready for the T1-T5 development cycle.
+
+## 📋 Development Roadmap (Milestones T1-T5)
+
+### �🏗️ **T1: High-Performance IPC Transport**
+- **Status**: 🔄 Planned
+- **Goal**: Implement zero-copy, sub-millisecond IPC transport
+- **Components**:
+  - Embedded IPC (Zenoh-pico integration)
+  - Linux IPC bridge
+  - Cross-domain communication protocols
+  - Performance optimization and testing
+
+### 🛡️ **T2: Data Protection & Security**
+- **Status**: 🔄 Planned  
+- **Goal**: Implement PQC security and anonymization features
+- **Components**:
+  - Post-quantum cryptographic signatures
+  - Data anonymization and obfuscation
+  - Trust level management
+  - Security audit and compliance
+
+### 📦 **T3: Advanced Serialization**
+- **Status**: 🔄 Planned
+- **Goal**: Implement zero-copy codec and batch processing
+- **Components**:
+  - Zero-copy serialization/deserialization
+  - Batch atom processing
+  - Memory pool management
+  - Performance benchmarks
+
+### 🌐 **T4: Enterprise Integration**
+- **Status**: 🔄 Planned
+- **Goal**: Implement enterprise-scale features
+- **Components**:
+  - Multi-tenant support
+  - Advanced routing and filtering
+  - Monitoring and observability
+  - Integration APIs
+
+### 🚀 **T5: Production Deployment**
+- **Status**: 🔄 Planned
+- **Goal**: Production-ready deployment and optimization
+- **Components**:
+  - Performance tuning
+  - Scalability testing
+  - Documentation and examples
+  - Release and distribution
+
+## 🧬 Current Implementation Status
+
+### ✅ **Completed: Core Foundation**
+- **32-byte Semantic Atom structure** with deterministic memory layout
+- **Telemetry type constants** for industrial interoperability
+- **Trust level and predicate constants** for data validation
+- **Zero-copy byte access** for high-performance serialization
+- **Cross-platform compatibility** (embedded + Linux)
+
+### ✅ **Completed: API Design**
+- **Transport trait definitions** for pluggable implementations
+- **IPC bridge interfaces** for cross-domain communication
+- **Performance requirement specifications** for embedded systems
+- **Comprehensive test coverage** for core components
+
+### 🔄 **In Progress: Framework Structure**
+- **Clean API skeletons** ready for implementation
+- **Feature-gated architecture** for embedded vs. Linux deployment
+- **CI/CD pipeline** for automated testing and validation
+- **Documentation foundation** for developer onboarding
+
+## 🚀 Quick Start
+
+### Prerequisites
+- Rust 1.70+ with support for embedded targets
+- For embedded development: `thumbv7m-none-eabi` or `thumbv8m.main-none-eabihf` targets
+
+### Installation
+```bash
+cargo add sams
+```
+
+### Basic Usage
+```rust
+use sams::types::{SemanticAtom, telemetry};
+
+fn main() {
+    // Create a temperature atom
+    let mut atom = SemanticAtom::new();
+    atom.entity_id = 1001;
+    atom.set_value(22.5); // 22.5°C
+    atom.telemetry_type = telemetry::TEMPERATURE_C;
+    
+    println!("Temperature: {:.1}°C", atom.get_value());
+    println!("Bytes: {:?}", atom.as_bytes());
+}
+```
+
+### Run Example
+```bash
+cargo run --example hello_atom
+```
+
 ## 🏗️ Architecture Overview
 
-SAMS enables seamless communication between heterogeneous industrial systems, from bare-metal microcontrollers to enterprise servers:
+The SAMS framework provides a unified API across heterogeneous industrial systems:
 
 ```text
 ┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐
-│   i.MX6 Linux    │    │   Cortex-M85     │    │   Cortex-M4      │
-│   (Enterprise)   │◄──►│   (Edge AI)      │◄──►│   (Sensors)      │
+│   Enterprise    │    │   Edge AI        │    │   Sensors       │
+│   (Linux)       │◄──►│   (Cortex-M85)   │◄──►│   (Cortex-M4)   │
 │                 │    │                 │    │                 │
 │ • Data Analytics│    │ • AI Processing │    │ • Sensor Nodes  │
 │ • Storage       │    │ • Edge Computing│    │ • Real-time I/O │
@@ -28,25 +132,109 @@ SAMS enables seamless communication between heterogeneous industrial systems, fr
 │                    SAMS Library (Unified API)                     │
 │  ┌─────────────┐ ┌─────────────┐ ┌─────────────┐ ┌─────────────┐  │
 │  │   Types     │ │   Shield    │ │   Codec     │ │  Transport  │  │
-│  │  (32-byte  │ │ (PQC/Anon)  │ │ (Zero-copy) │ │ (Zenoh)     │  │
+│  │  (32-byte  │ │ (PQC/Anon)  │ │ (Zero-copy) │ │ (IPC/Net)   │  │
 │  │   Atoms)    │ │             │ │             │ │             │  │
+│  │ ✅ READY    │ │ 🔄 T2       │ │ 🔄 T3       │ │ 🔄 T1       │  │
 │  └─────────────┘ └─────────────┘ └─────────────┘ └─────────────┘  │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-### System Interactions
+## 🧬 32-Byte Semantic Atom Structure
 
-**i.MX6 Linux (Enterprise Layer)**
-- High-performance data processing and analytics
-- Long-term storage and historical data management
-- Network gateway to cloud services and enterprise systems
-- Complex business logic and machine learning pipelines
+The core data structure is a deterministic 32-byte packet:
 
-**Cortex-M85 (Edge AI Layer)**
-- Real-time AI inference using Arm Ethos-U NPU
-- Protocol bridging between different communication standards
-- Edge analytics and local decision making
-- Data aggregation and preprocessing
+```text
+┌─────────────────────────────────────────────────────────────┐
+│                    Semantic Atom (32 bytes)                 │
+├─────────────────────────────────────────────────────────────┤
+│ Bytes 0-3   │ entity_id     │ Entity identifier              │
+│ Bytes 4-7   │ sequence      │ Sequence number                │
+│ Bytes 8-11  │ value_fixed   │ Fixed-point value (hundredths)  │
+│ Bytes 12-15 │ status_flags  │ Status and metadata            │
+│ Bytes 16-23 │ timestamp_us  │ Microsecond timestamp          │
+│ Bytes 24-25 │ node_id       │ Node identifier                │
+│ Bytes 26-27 │ telemetry_type│ Telemetry type                 │
+│ Bytes 28-31 │ trust_pqc     │ Trust (8-bit) + PQC (24-bit)   │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### Key Features
+- **Deterministic Layout**: `#[repr(C)]` guarantees consistent memory layout
+- **Zero-Copy Access**: Direct byte access without serialization overhead
+- **Fixed-Point Arithmetic**: Efficient floating-point representation
+- **FFI Compatibility**: Safe to pass across language boundaries
+- **Cache Optimized**: 32-byte alignment for modern processors
+
+## 🔧 Feature Flags
+
+- **`embedded`**: Enable no_std support for bare-metal microcontrollers
+- **`std`**: Enable full Linux support with standard library
+- **`pqc`**: Enable post-quantum cryptographic features (T2)
+- **`transport`**: Enable transport layer implementations (T1)
+
+## 📊 Performance Targets
+
+| Component | Target | Status |
+|-----------|--------|--------|
+| Atom Creation | < 100ns | ✅ Complete |
+| Byte Access | < 10ns | ✅ Complete |
+| Transport Latency | < 1ms | 🔄 T1 |
+| PQC Signing | < 5ms | 🔄 T2 |
+| Batch Processing | > 1M atoms/s | 🔄 T3 |
+
+## 🛡️ Security & Compliance
+
+The SAMS framework is designed for compliance with:
+- **EU AI Act**: Accuracy, robustness, and cybersecurity requirements
+- **EU Data Act**: Data portability and trade secret protection
+- **Cyber Resilience Act**: Security-by-design and vulnerability management
+
+## 🧪 Testing
+
+```bash
+# Run all tests
+cargo test --all-features
+
+# Run specific example
+cargo run --example hello_atom --release
+
+# Build for embedded targets
+cargo build --target thumbv7m-none-eabi --features embedded
+```
+
+## 📚 Documentation
+
+- **API Documentation**: [docs.rs/sams](https://docs.rs/sams)
+- **Examples**: See `examples/` directory
+- **Architecture Guide**: See `docs/` directory (coming soon)
+
+## 🤝 Contributing
+
+This project is in active development as part of the NLnet milestones. Contributions are welcome, especially for:
+
+1. **Transport implementations** (Milestone T1)
+2. **Security features** (Milestone T2)
+3. **Performance optimization** (All milestones)
+4. **Documentation and examples** (All milestones)
+
+Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+
+## 📄 License
+
+This project is licensed under either of:
+
+- [Apache License, Version 2.0](LICENSE-APACHE)
+- [MIT License](LICENSE-MIT)
+
+at your option.
+
+## 🙏 Acknowledgments
+
+This project is funded by [NLnet](https://nlnet.nl/) and developed as part of the Sovereign Grid Network initiative.
+
+---
+
+**Note**: This is a work-in-progress framework. The core Semantic Atom structure is complete and ready for use, but transport, security, and advanced features are planned for the T1-T5 development cycle.
 
 **Cortex-M4 (Sensor Layer)**
 - Direct sensor interfacing and data acquisition
