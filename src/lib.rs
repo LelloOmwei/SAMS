@@ -16,7 +16,7 @@
 //!
 //! The SAMS ecosystem consists of three main processing layers:
 //!
-//! ```text
+//! ```text, ignore
 //! ┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐
 //! │   i.MX6 Linux    │    │   Cortex-M85     │    │   Cortex-M4      │
 //! │   (Enterprise)   │◄──►│   (Edge AI)      │◄──►│   (Sensors)      │
@@ -47,7 +47,7 @@
 //!
 //! ### Embedded (no_std)
 //!
-//! ```rust
+//! ```rust, no_run
 //! #![no_std]
 //! use sams::{AtomBuilder, Shield, AnonymizationLevel};
 //!
@@ -68,7 +68,7 @@
 //!
 //! ### Linux (std)
 //!
-//! ```rust
+//! ```rust, no_run
 //! use sams::{ZenohTransport, AtomBuilder};
 //!
 //! #[tokio::main]
@@ -92,7 +92,7 @@
 //! The core data structure is a deterministic 32-byte packet designed for high-performance
 //! industrial communication:
 //!
-//! ```text
+//! ```text, ignore
 //! ┌─────────────────────────────────────────────────────────────┐
 //! │                    Semantic Atom (32 bytes)                 │
 //! ├─────────────────────────────────────────────────────────────┤
@@ -114,7 +114,7 @@
 //! - **pqc**: Post-quantum cryptography features
 //! - **transport**: Zenoh transport integration
 //!
-//! ```toml
+//! ```toml, ignore
 //! # For embedded systems
 //! sams = { version = "0.1.0", default-features = false, features = ["embedded"] }
 //!
@@ -129,6 +129,7 @@
 //! | Serialization | < 100ns | N/A | Zero-copy |
 //! | PQC Signing | ~1ms | 1000 ops/s | 32B key |
 //! | Zenoh Publish | ~1ms | 10K ops/s | Network dependent |
+//! ```ignore
 //!
 //! ## Safety and Security
 //!

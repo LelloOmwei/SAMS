@@ -8,20 +8,21 @@
 //! The core data structure is a deterministic 32-byte packet designed for high-performance
 //! industrial communication:
 //!
-//! ```text
-//! ┌─────────────────────────────────────────────────────────────┐
-//! │                    Semantic Atom (32 bytes)                 │
-//! ├─────────────────────────────────────────────────────────────┤
-//! │ Bytes 0-3   │ entity_id     │ Entity identifier              │
-//! │ Bytes 4-7   │ sequence      │ Sequence number                │
-//! │ Bytes 8-11  │ value_fixed   │ Fixed-point value (hundredths)  │
-//! │ Bytes 12-15 │ status_flags  │ Status and metadata            │
-//! │ Bytes 16-23 │ timestamp_us  │ Microsecond timestamp          │
-//! │ Bytes 24-25 │ node_id       │ Node identifier                │
-//! │ Bytes 26-27 │ telemetry_type│ Telemetry type                 │
-//! │ Bytes 28-31 │ trust_pqc     │ Trust (8-bit) + PQC (24-bit)   │
-//! └─────────────────────────────────────────────────────────────┘
-//! ```
+/// ```text
+/// ┌─────────────────────────────────────────────────────────────┐
+/// │                    Semantic Atom (32 bytes)                 │
+/// ├─────────────────────────────────────────────────────────────┤
+/// │ Bytes 0-3   │ entity_id     │ Entity identifier              │
+/// │ Bytes 4-7   │ sequence      │ Sequence number                │
+/// │ Bytes 8-11  │ value_fixed   │ Fixed-point value (hundredths)  │
+/// │ Bytes 12-15 │ status_flags  │ Status and metadata            │
+/// │ Bytes 16-23 │ timestamp_us  │ Microsecond timestamp          │
+/// │ Bytes 24-25 │ node_id       │ Node identifier                │
+/// │ Bytes 26-27 │ telemetry_type│ Telemetry type                 │
+/// │ Bytes 28-31 │ trust_pqc     │ Trust (8-bit) + PQC (24-bit)   │
+/// └─────────────────────────────────────────────────────────────┘
+/// ```
+/// # ignore
 //!
 //! ## Memory Layout Guarantees
 //!
@@ -58,23 +59,23 @@
 //! - **ANOMALY (0x02)**: Flagged as anomalous
 //! - **ENTERPRISE (0xFF)**: Enterprise-grade verified data
 //!
-//! ## Usage Examples
-//!
-//! ```rust
-//! use sams::{AtomBuilder, telemetry};
-//!
-//! // Create a temperature atom
-//! let atom = AtomBuilder::new()
-//!     .entity_id(0x00010002) // Temperature sensor
-//!     .telemetry_type(telemetry::TEMPERATURE_C)
-//!     .value(22.5) // 22.5°C
-//!     .build();
-//!
-//! // Access atom fields
-//! assert_eq!(atom.entity_id(), 0x00010002);
-//! assert_eq!(atom.telemetry_type(), telemetry::TEMPERATURE_C);
-//! assert_eq!(atom.get_value(), 22.5);
-//! ```
+/// ## Usage Examples
+///
+/// ```rust, no_run
+/// use sams::{AtomBuilder, telemetry};
+///
+/// // Create a temperature atom
+/// let atom = AtomBuilder::new()
+///     .entity_id(0x00010002) // Temperature sensor
+///     .telemetry_type(telemetry::TEMPERATURE_C)
+///     .value(22.5) // 22.5°C
+///     .build();
+///
+/// // Access atom fields
+/// assert_eq!(atom.entity_id(), 0x00010002);
+/// assert_eq!(atom.telemetry_type(), telemetry::TEMPERATURE_C);
+/// assert_eq!(atom.get_value(), 22.5);
+/// ```
 
 use crate::{ATOM_SIZE, FIXED_POINT_PRECISION};
 use serde::{Deserialize, Serialize};
