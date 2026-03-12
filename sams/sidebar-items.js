@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"constant":["ATOM_SIZE","FIXED_POINT_PRECISION","VERSION"],"mod":["transport","types","utils"],"type":["Result"]};
+window.SIDEBAR_ITEMS = {"constant":["ATOM_SIZE","FIXED_POINT_PRECISION","VERSION"],"mod":["types","utils"],"type":["Result"]};
