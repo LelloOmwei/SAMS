@@ -43,7 +43,7 @@
 // ## Telemetry Types
 //
 // Standardized telemetry type identifiers ensure interoperability:
-//!
+//
 /// | Type | Hex | Unit | Range | Example |
 /// |------|-----|------|-------|---------|
 /// | Temperature | 0x0002 | °C | -50 to 100 | 22.5°C |
