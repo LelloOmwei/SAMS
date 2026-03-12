@@ -336,7 +336,7 @@
 <a href=#336 id=336 data-nosnippet>336</a><span class="attr">#[cfg(all(test, feature = <span class="string">"std"</span>))]
 <a href=#337 id=337 data-nosnippet>337</a></span><span class="kw">mod </span>tests {
 <a href=#338 id=338 data-nosnippet>338</a>    <span class="kw">use </span>super::<span class="kw-2">*</span>;
-<a href=#339 id=339 data-nosnippet>339</a>    <span class="kw">use </span>crate::{AtomBuilder, telemetry};
+<a href=#339 id=339 data-nosnippet>339</a>    <span class="kw">use </span>crate::{AtomBuilder, types::telemetry};
 <a href=#340 id=340 data-nosnippet>340</a>
 <a href=#341 id=341 data-nosnippet>341</a>    <span class="attr">#[test]
 <a href=#342 id=342 data-nosnippet>342</a>    </span><span class="kw">fn </span>test_basic_anonymization() {
@@ -441,7 +441,7 @@
 <a href=#441 id=441 data-nosnippet>441</a>            .build();
 <a href=#442 id=442 data-nosnippet>442</a>
 <a href=#443 id=443 data-nosnippet>443</a>        <span class="kw">let </span>packet = shield.create_protected_packet(<span class="kw-2">&amp;</span>atom).unwrap();
-<a href=#444 id=444 data-nosnippet>444</a>        <span class="macro">assert_eq!</span>(packet.len(), ATOM_SIZE + <span class="number">32</span>);
+<a href=#444 id=444 data-nosnippet>444</a>        <span class="macro">assert_eq!</span>(packet.len(), <span class="kw">crate</span>::ATOM_SIZE + <span class="number">32</span>);
 <a href=#445 id=445 data-nosnippet>445</a>
 <a href=#446 id=446 data-nosnippet>446</a>        <span class="kw">let </span>(extracted_atom, is_valid) = shield.extract_protected_packet(<span class="kw-2">&amp;</span>packet).unwrap();
 <a href=#447 id=447 data-nosnippet>447</a>        <span class="macro">assert!</span>(is_valid);
