@@ -1,2 +1,2 @@
-createSrcSidebar('[["sams",["",[],["lib.rs","types.rs","utils.rs"]]]]');
-//{"start":19,"fragment_lengths":[49]}
+createSrcSidebar('[["sams",["",[],["codec.rs","lib.rs","shield.rs","types.rs","utils.rs"]]]]');
+//{"start":19,"fragment_lengths":[72]}

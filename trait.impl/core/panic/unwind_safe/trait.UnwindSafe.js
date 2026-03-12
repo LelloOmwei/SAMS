@@ -1,9 +1,9 @@
 (function() {
-    const implementors = Object.fromEntries([["sams",[["impl <a class=\"trait\" href=\"https://doc.rust-lang.org/1.94.0/core/panic/unwind_safe/trait.UnwindSafe.html\" title=\"trait core::panic::unwind_safe::UnwindSafe\">UnwindSafe</a> for <a class=\"enum\" href=\"sams/utils/validation/enum.ValidationResult.html\" title=\"enum sams::utils::validation::ValidationResult\">ValidationResult</a>",0,1,["sams::utils::validation::ValidationResult"]],["impl <a class=\"trait\" href=\"https://doc.rust-lang.org/1.94.0/core/panic/unwind_safe/trait.UnwindSafe.html\" title=\"trait core::panic::unwind_safe::UnwindSafe\">UnwindSafe</a> for <a class=\"struct\" href=\"sams/types/struct.SemanticAtom.html\" title=\"struct sams::types::SemanticAtom\">SemanticAtom</a>",0,1,["sams::types::SemanticAtom"]]]]]);
+    const implementors = Object.fromEntries([["sams",[["impl <a class=\"trait\" href=\"https://doc.rust-lang.org/1.94.0/core/panic/unwind_safe/trait.UnwindSafe.html\" title=\"trait core::panic::unwind_safe::UnwindSafe\">UnwindSafe</a> for <a class=\"enum\" href=\"sams/utils/validation/enum.ValidationResult.html\" title=\"enum sams::utils::validation::ValidationResult\">ValidationResult</a>",0,1,["sams::utils::validation::ValidationResult"]],["impl <a class=\"trait\" href=\"https://doc.rust-lang.org/1.94.0/core/panic/unwind_safe/trait.UnwindSafe.html\" title=\"trait core::panic::unwind_safe::UnwindSafe\">UnwindSafe</a> for <a class=\"struct\" href=\"sams/shield/struct.SamsShield.html\" title=\"struct sams::shield::SamsShield\">SamsShield</a>",0,1,["sams::shield::SamsShield"]],["impl <a class=\"trait\" href=\"https://doc.rust-lang.org/1.94.0/core/panic/unwind_safe/trait.UnwindSafe.html\" title=\"trait core::panic::unwind_safe::UnwindSafe\">UnwindSafe</a> for <a class=\"struct\" href=\"sams/types/struct.SemanticAtom.html\" title=\"struct sams::types::SemanticAtom\">SemanticAtom</a>",0,1,["sams::types::SemanticAtom"]]]]]);
     if (window.register_implementors) {
         window.register_implementors(implementors);
     } else {
         window.pending_implementors = implementors;
     }
 })()
-//{"start":59,"fragment_lengths":[747]}
+//{"start":59,"fragment_lengths":[1088]}
