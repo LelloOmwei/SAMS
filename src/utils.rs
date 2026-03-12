@@ -187,7 +187,13 @@ pub mod validation {
         Error(&'static str),
     }
 
-    /// Validate atom structure
+    /// Basic validation trait for implementation-specific logic
+    pub trait Validator {
+        /// Validate an atom using implementation-specific rules
+        fn validate(&self, atom: &SemanticAtom) -> ValidationResult;
+    }
+
+    /// Validate atom structure (basic checks only)
     pub fn validate_structure(atom: &SemanticAtom) -> ValidationResult {
         // Check entity ID
         if atom.entity_id == 0 {
@@ -207,83 +213,32 @@ pub mod validation {
         ValidationResult::Valid
     }
 
-    /// Validate atom value ranges
+    /// Validate atom value ranges (abstracted)
     pub fn validate_value_ranges(atom: &SemanticAtom) -> ValidationResult {
         let value = atom.get_value();
 
-        match atom.telemetry_type {
-            0x0001 => { // Water level (mm)
-                if value < 0.0 || value > 10000.0 {
-                    return ValidationResult::Error("Water level out of range (0-10000mm)");
-                }
-            }
-            0x0002 => { // Temperature (°C)
-                if value < -50.0 || value > 100.0 {
-                    return ValidationResult::Warning("Temperature out of typical range (-50 to 100°C)");
-                }
-            }
-            0x0003 => { // Humidity (%)
-                if value < 0.0 || value > 100.0 {
-                    return ValidationResult::Error("Humidity out of range (0-100%)");
-                }
-            }
-            0x0004 => { // Pressure (Pa)
-                if value < 80000.0 || value > 120000.0 {
-                    return ValidationResult::Warning("Pressure out of typical range (800-1200 hPa)");
-                }
-            }
-            0x0005 => { // Precipitation (mm)
-                if value < 0.0 || value > 1000.0 {
-                    return ValidationResult::Warning("Precipitation out of typical range (0-1000mm)");
-                }
-            }
-            0x0006 => { // CO2 (ppm)
-                if value < 0.0 || value > 10000.0 {
-                    return ValidationResult::Warning("CO2 out of typical range (0-10000ppm)");
-                }
-            }
-            _ => {
-                // Unknown telemetry type, but value should be reasonable
-                if value < 0.0 || value > 1_000_000.0 {
-                    return ValidationResult::Warning("Value out of reasonable range");
-                }
-            }
+        // Basic sanity check - value should be reasonable
+        if value < 0.0 || value > 1_000_000.0 {
+            return ValidationResult::Warning("Value out of reasonable range");
         }
 
+        // TODO: Implementation-specific value validation
+        // This should be implemented by the specific application
         ValidationResult::Valid
     }
 
-    /// Validate temporal consistency
+    /// Validate temporal consistency (abstracted)
     pub fn validate_temporal_consistency(
         current: &SemanticAtom,
-        previous: Option<&SemanticAtom>,
+        _previous: Option<&SemanticAtom>,
     ) -> ValidationResult {
-        if let Some(prev) = previous {
-            // Check sequence number
-            if current.sequence <= prev.sequence {
-                return ValidationResult::Warning("Sequence number not increasing");
-            }
-
-            // Check timestamp
-            if current.timestamp_us <= prev.timestamp_us {
-                return ValidationResult::Error("Timestamp not increasing");
-            }
-
-            // Check rate of change (basic sanity check)
-            let time_diff = current.timestamp_us.saturating_sub(prev.timestamp_us);
-            if time_diff == 0 {
-                return ValidationResult::Warning("Duplicate timestamp");
-            }
-
-            // If time difference is too small, warn
-            if time_diff < 1000 { // Less than 1ms
-                return ValidationResult::Warning("Very high frequency data");
-            }
-
-            // If time difference is too large, warn
-            if time_diff > 3600_000_000 { // More than 1 hour
-                return ValidationResult::Warning("Large time gap");
-            }
+        // TODO: Implementation-specific temporal validation
+        // This contains proprietary logic for temporal consistency checks
+        // Implementations should override this with their specific validation rules
+        
+        // Basic check - ensure timestamp is reasonable
+        if current.timestamp_us == 0 {
+            return ValidationResult::Warning("Timestamp is zero");
         }
 
         ValidationResult::Valid
@@ -300,8 +255,6 @@ pub mod validation {
             validate_temporal_consistency(atom, previous),
         ];
 
-        // Filter out valid results, keep warnings and errors
-        // For no_std, we'll keep all results and let caller filter
         results
     }
 
