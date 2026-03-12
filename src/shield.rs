@@ -336,7 +336,7 @@ impl Default for Shield {
 #[cfg(all(test, feature = "std"))]
 mod tests {
     use super::*;
-    use crate::{AtomBuilder, telemetry};
+    use crate::{AtomBuilder, types::telemetry};
 
     #[test]
     fn test_basic_anonymization() {
@@ -441,7 +441,7 @@ mod tests {
             .build();
 
         let packet = shield.create_protected_packet(&atom).unwrap();
-        assert_eq!(packet.len(), ATOM_SIZE + 32);
+        assert_eq!(packet.len(), crate::ATOM_SIZE + 32);
 
         let (extracted_atom, is_valid) = shield.extract_protected_packet(&packet).unwrap();
         assert!(is_valid);

@@ -391,7 +391,7 @@ pub mod math {
 #[cfg(all(test, feature = "std"))]
 mod tests {
     use super::*;
-    use crate::{AtomBuilder, telemetry};
+    use crate::{AtomBuilder, types::telemetry};
 
     #[test]
     fn test_fixed_point_conversion() {
