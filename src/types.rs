@@ -23,10 +23,10 @@
 /// └─────────────────────────────────────────────────────────────┘
 /// ```
 /// # ignore
-//!
-//! ## Memory Layout Guarantees
-//!
-//! The SemanticAtom uses `#[repr(C)]` to ensure:
+///
+// ## Memory Layout Guarantees
+//
+// The SemanticAtom uses `#[repr(C)]` to ensure:
 // - **Deterministic layout**: Same memory layout across all platforms
 // - **FFI compatibility**: Safe to pass across language boundaries
 // - **Zero-copy serialization**: Direct byte access without copying
@@ -58,7 +58,7 @@
 /// - **VERIFIED (0x01)**: Basic validation performed
 /// - **ANOMALY (0x02)**: Flagged as anomalous
 /// - **ENTERPRISE (0xFF)**: Enterprise-grade verified data
-//!
+///
 /// ## Usage Examples
 ///
 /// ```rust, no_run
