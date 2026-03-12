@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"mod":["predicate","telemetry","trust"],"struct":["AtomBuilder","SemanticAtom"],"type":["EntityId","TelemetryType","TrustLevel"]};

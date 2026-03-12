@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["exponential_moving_average","find_outliers","lerp","moving_average","standard_deviation"]};

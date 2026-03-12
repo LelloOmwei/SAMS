@@ -1,0 +1,120 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="SAMS - Semantic Atom Management Stack"><title>sams - Rust</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2"href="../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../static.files/rustdoc-77263533.css"><meta name="rustdoc-vars" data-root-path="../" data-static-root-path="../static.files/" data-current-crate="sams" data-themes="" data-resource-suffix="" data-rustdoc-version="1.94.0 (4a4ef493e 2026-03-02)" data-channel="1.94.0" data-search-js="search-9e2438ea.js" data-stringdex-js="stringdex-b897f86f.js" data-settings-js="settings-c38705f0.js" ><script src="../static.files/storage-e2aeef58.js"></script><script defer src="../crates.js"></script><script defer src="../static.files/main-7bab91a1.js"></script><noscript><link rel="stylesheet" href="../static.files/noscript-ffcac47a.css"></noscript><link rel="alternate icon" type="image/png" href="../static.files/favicon-32x32-eab170b8.png"><link rel="icon" type="image/svg+xml" href="../static.files/favicon-044be391.svg"></head><body class="rustdoc mod crate"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><rustdoc-topbar><h2><a href="#">Crate sams</a></h2></rustdoc-topbar><nav class="sidebar"><div class="sidebar-crate"><h2><a href="../sams/index.html">sams</a><span class="version">0.1.0</span></h2></div><div class="sidebar-elems"><ul class="block"><li><a id="all-types" href="all.html">All Items</a></li></ul><section id="rustdoc-toc"><h3><a href="#">Sections</a></h3><ul class="block top-toc"><li><a href="#sams---semantic-atom-management-stack" title="SAMS - Semantic Atom Management Stack">SAMS - Semantic Atom Management Stack</a><ul><li><a href="#overview" title="Overview">Overview</a></li><li><a href="#architecture" title="Architecture">Architecture</a></li><li><a href="#key-features" title="Key Features">Key Features</a></li><li><a href="#quick-start" title="Quick Start">Quick Start</a></li><li><a href="#32-byte-semantic-atom" title="32-Byte Semantic Atom">32-Byte Semantic Atom</a></li><li><a href="#feature-flags" title="Feature Flags">Feature Flags</a></li><li><a href="#performance" title="Performance">Performance</a></li></ul></li></ul><h3><a href="#reexports">Crate Items</a></h3><ul class="block"><li><a href="#reexports" title="Re-exports">Re-exports</a></li><li><a href="#modules" title="Modules">Modules</a></li><li><a href="#constants" title="Constants">Constants</a></li><li><a href="#types" title="Type Aliases">Type Aliases</a></li></ul></section><div id="rustdoc-modnav"></div></div></nav><div class="sidebar-resizer" title="Drag to resize sidebar"></div><main><div class="width-limiter"><section id="main-content" class="content"><div class="main-heading"><h1>Crate <span>sams</span>&nbsp;<button id="copy-path" title="Copy item path to clipboard">Copy item path</button></h1><rustdoc-toolbar></rustdoc-toolbar><span class="sub-heading"><a class="src" href="../src/sams/lib.rs.html#1-209">Source</a> </span></div><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><h2 id="sams---semantic-atom-management-stack"><a class="doc-anchor" href="#sams---semantic-atom-management-stack">§</a>SAMS - Semantic Atom Management Stack</h2>
+<p>A memory-safe, 32-byte Semantic Atom Management Stack for industrial IPC.
+Provides zero-copy serialization, PQC security, and unified APIs across embedded and Linux systems.</p>
+<h3 id="overview"><a class="doc-anchor" href="#overview">§</a>Overview</h3>
+<p>SAMS is designed for high-performance industrial environments where deterministic processing
+and memory safety are critical. The library enables seamless communication between
+heterogeneous systems, from bare-metal microcontrollers to enterprise servers.</p>
+<h3 id="architecture"><a class="doc-anchor" href="#architecture">§</a>Architecture</h3>
+<p>The SAMS ecosystem consists of three main processing layers:</p>
+<div class="example-wrap"><pre class="language-text"><code>┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐
+│   i.MX6 Linux    │    │   Cortex-M85     │    │   Cortex-M4      │
+│   (Enterprise)   │◄──►│   (Edge AI)      │◄──►│   (Sensors)      │
+└─────────────────┘    └──────────────────┘    └─────────────────┘
+        │                       │                       │
+        │                       │                       │
+        ▼                       ▼                       ▼
+┌─────────────────────────────────────────────────────────────────┐
+│                    SAMS Library (Unified API)                     │
+│  ┌─────────────┐ ┌─────────────┐ ┌─────────────┐ ┌─────────────┐  │
+│  │   Types     │ │   Shield    │ │   Codec     │ │  Transport  │  │
+│  │  (32-byte  │ │ (PQC/Anon)  │ │ (Zero-copy) │ │ (Zenoh)     │  │
+│  │   Atoms)    │ │             │ │             │ │             │  │
+│  └─────────────┘ └─────────────┘ └─────────────┘ └─────────────┘  │
+└─────────────────────────────────────────────────────────────────┘</code></pre></div><h3 id="key-features"><a class="doc-anchor" href="#key-features">§</a>Key Features</h3>
+<ul>
+<li><strong>🔧 no_std Compatible</strong>: Works on bare-metal microcontrollers (Cortex-M85/M4)</li>
+<li><strong>📦 32-Byte Atoms</strong>: Unified atom structure for all platforms with guaranteed memory layout</li>
+<li><strong>⚡ Zero-Copy Operations</strong>: Sub-100ns serialization with no memory allocation</li>
+<li><strong>🛡️ PQC Ready</strong>: Post-quantum cryptography support (HMAC-SHA256 → ML-DSA)</li>
+<li><strong>🌐 Transport Agnostic</strong>: Zenoh-pico for embedded, full Zenoh for Linux</li>
+<li><strong>🔒 Data Protection</strong>: 5-level anonymization with semantic obfuscation</li>
+</ul>
+<h3 id="quick-start"><a class="doc-anchor" href="#quick-start">§</a>Quick Start</h3><h4 id="embedded-no_std"><a class="doc-anchor" href="#embedded-no_std">§</a>Embedded (no_std)</h4>
+<div class="example-wrap ignore"><a href="#" class="tooltip" title="This example is not tested">ⓘ</a><pre class="rust rust-example-rendered"><code><span class="attr">#![no_std]
+</span><span class="kw">use </span>sams::{AtomBuilder, Shield, AnonymizationLevel, transmit_atom};
+
+<span class="comment">// Create and protect an atom
+</span><span class="kw">let </span><span class="kw-2">mut </span>atom = AtomBuilder::new()
+    .entity_id(<span class="number">1</span>)
+    .value(<span class="number">450.0</span>) <span class="comment">// CO2 in ppm
+    </span>.telemetry_type(<span class="number">0x0006</span>)
+    .build();
+
+<span class="kw">let </span><span class="kw-2">mut </span>shield = Shield::new();
+shield.anonymize_atom(<span class="kw-2">&amp;mut </span>atom)<span class="question-mark">?</span>;
+
+<span class="comment">// Transmit atom (zero-copy)
+</span>transmit_atom(atom.as_bytes());</code></pre></div><h4 id="linux-std"><a class="doc-anchor" href="#linux-std">§</a>Linux (std)</h4>
+<div class="example-wrap ignore"><a href="#" class="tooltip" title="This example is not tested">ⓘ</a><pre class="rust rust-example-rendered"><code><span class="kw">use </span>sams::{AtomBuilder, telemetry};
+
+<span class="attr">#[tokio::main]
+</span><span class="kw">async fn </span>main() -&gt; <span class="prelude-ty">Result</span>&lt;(), Box&lt;<span class="kw">dyn </span>std::error::Error&gt;&gt; {
+    <span class="comment">// Initialize transport
+    </span><span class="kw">let </span>transport: <span class="comment">/* ZenohTransport */ </span>= ZenohTransport::new().<span class="kw">await</span><span class="question-mark">?</span>;
+
+    <span class="comment">// Create and publish atom
+    </span><span class="kw">let </span>atom = AtomBuilder::new()
+        .entity_id(<span class="number">123</span>)
+        .telemetry_type(telemetry::TEMPERATURE_C)
+        .value(<span class="number">25.3</span>)
+        .build_now();
+
+    transport.publish_atom(<span class="string">"sensors/temperature"</span>, <span class="kw-2">&amp;</span>atom).<span class="kw">await</span><span class="question-mark">?</span>;
+    <span class="prelude-val">Ok</span>(())
+}</code></pre></div><h3 id="32-byte-semantic-atom"><a class="doc-anchor" href="#32-byte-semantic-atom">§</a>32-Byte Semantic Atom</h3>
+<p>The core data structure is a deterministic 32-byte packet designed for high-performance
+industrial communication:</p>
+<div class="example-wrap"><pre class="language-text"><code>┌─────────────────────────────────────────────────────────────┐
+│                    Semantic Atom (32 bytes)                 │
+├─────────────────────────────────────────────────────────────┤
+│ Bytes 0-3   │ entity_id     │ Entity identifier              │
+│ Bytes 4-7   │ sequence      │ Sequence number                │
+│ Bytes 8-11  │ value_fixed   │ Fixed-point value (hundredths)  │
+│ Bytes 12-15 │ status_flags  │ Status and metadata            │
+│ Bytes 16-23 │ timestamp_us  │ Microsecond timestamp          │
+│ Bytes 24-25 │ node_id       │ Node identifier                │
+│ Bytes 26-27 │ telemetry_type│ Telemetry type                 │
+│ Bytes 28-31 │ trust_pqc     │ Trust (8-bit) + PQC (24-bit)   │
+└─────────────────────────────────────────────────────────────┘</code></pre></div><h3 id="feature-flags"><a class="doc-anchor" href="#feature-flags">§</a>Feature Flags</h3>
+<ul>
+<li><strong>embedded</strong>: no_std support for bare-metal systems</li>
+<li><strong>std</strong>: Full standard library support (Linux/macOS/Windows)</li>
+<li><strong>pqc</strong>: Post-quantum cryptography features</li>
+<li><strong>transport</strong>: Zenoh transport integration</li>
+</ul>
+<div class="example-wrap"><pre class="language-toml"><code># For embedded systems
+sams = { version = &quot;0.1.0&quot;, default-features = false, features = [&quot;embedded&quot;] }
+
+# For Linux with full features
+sams = { version = &quot;0.1.0&quot;, features = [&quot;std&quot;, &quot;pqc&quot;, &quot;transport&quot;] }</code></pre></div><h3 id="performance"><a class="doc-anchor" href="#performance">§</a>Performance</h3><div><table><thead><tr><th>Operation</th><th>Latency</th><th>Throughput</th><th>Memory</th></tr></thead><tbody>
+<tr><td>Serialization</td><td>&lt; 100ns</td><td>N/A</td><td>Zero-copy</td></tr>
+<tr><td>PQC Signing</td><td>~1ms</td><td>1000 ops/s</td><td>32B key</td></tr>
+<tr><td>Zenoh Publish</td><td>~1ms</td><td>10K ops/s</td><td>Network dependent</td></tr>
+</tbody></table>
+</div>
+<div class="example-wrap ignore"><a href="#" class="tooltip" title="This example is not tested">ⓘ</a><pre class="rust rust-example-rendered"><code>
+# Safety and Security
+
+- <span class="kw-2">**</span>Memory Safety<span class="kw-2">**</span>: Rust<span class="lifetime">'s </span>ownership model prevents buffer overflows and data races
+- <span class="kw-2">**</span>Type Safety<span class="kw-2">**</span>: Strong typing prevents data corruption at compile time
+- <span class="kw-2">**</span>PQC Security<span class="kw-2">**</span>: Quantum-resistant cryptography <span class="kw">for </span>long-term security
+- <span class="kw-2">**</span>Data Protection<span class="kw-2">**</span>: Built-<span class="kw">in </span>anonymization <span class="kw">for </span>privacy compliance
+
+# Industrial Use Cases
+
+- <span class="kw-2">**</span>Manufacturing<span class="kw-2">**</span>: Real-time sensor data from production lines
+- <span class="kw-2">**</span>Energy<span class="kw-2">**</span>: Smart grid monitoring and control systems
+- <span class="kw-2">**</span>Transportation<span class="kw-2">**</span>: Vehicle-to-vehicle communication systems
+- <span class="kw-2">**</span>Agriculture<span class="kw-2">**</span>: Precision farming sensor networks
+- <span class="kw-2">**</span>Infrastructure<span class="kw-2">**</span>: Building automation and smart cities
+
+# Examples
+
+See the [examples](https:<span class="comment">//github.com/LelloOmwei/SAMS/tree/main/examples) directory for:
+</span>- [embedded_demo.rs](https:<span class="comment">//github.com/LelloOmwei/SAMS/tree/main/examples/embedded_demo.rs) - Cortex-M usage
+</span>- [linux_cli.rs](https:<span class="comment">//github.com/LelloOmwei/SAMS/tree/main/examples/linux_cli.rs) - Linux CLI application
+
+</span># License
+
+Licensed under either [Apache-<span class="number">2.0</span>](https:<span class="comment">//www.apache.org/licenses/LICENSE-2.0) or [MIT](https://opensource.org/licenses/MIT) at your option.</span></code></pre></div></div></details><h2 id="reexports" class="section-header">Re-exports<a href="#reexports" class="anchor">§</a></h2><dl class="item-table reexports"><dt id="reexport.SemanticAtom"><code>pub use types::<a class="struct" href="types/struct.SemanticAtom.html" title="struct sams::types::SemanticAtom">SemanticAtom</a>;</code></dt><dt id="reexport.AtomBuilder"><code>pub use types::<a class="struct" href="types/struct.AtomBuilder.html" title="struct sams::types::AtomBuilder">AtomBuilder</a>;</code></dt><dt id="reexport.EntityId"><code>pub use types::<a class="type" href="types/type.EntityId.html" title="type sams::types::EntityId">EntityId</a>;</code></dt><dt id="reexport.TelemetryType"><code>pub use types::<a class="type" href="types/type.TelemetryType.html" title="type sams::types::TelemetryType">TelemetryType</a>;</code></dt><dt id="reexport.TrustLevel"><code>pub use types::<a class="type" href="types/type.TrustLevel.html" title="type sams::types::TrustLevel">TrustLevel</a>;</code></dt></dl><h2 id="modules" class="section-header">Modules<a href="#modules" class="anchor">§</a></h2><dl class="item-table"><dt><a class="mod" href="codec/index.html" title="mod sams::codec">codec</a></dt><dd>SAMS Codec - Zero-copy serialization and deserialization</dd><dt><a class="mod" href="shield/index.html" title="mod sams::shield">shield</a></dt><dd>SAMS Shield - Data anonymization and PQC protection</dd><dt><a class="mod" href="transport/index.html" title="mod sams::transport">transport</a></dt><dd>SAMS Transport - Zenoh-pico integration for embedded systems</dd><dt><a class="mod" href="types/index.html" title="mod sams::types">types</a></dt><dd>SAMS Types - Core data structures and constants</dd><dt><a class="mod" href="utils/index.html" title="mod sams::utils">utils</a></dt><dd>SAMS Utils - Utility functions for semantic atom processing</dd></dl><h2 id="constants" class="section-header">Constants<a href="#constants" class="anchor">§</a></h2><dl class="item-table"><dt><a class="constant" href="constant.ATOM_SIZE.html" title="constant sams::ATOM_SIZE">ATOM_<wbr>SIZE</a></dt><dd>Atom size in bytes (fixed for all platforms)</dd><dt><a class="constant" href="constant.FIXED_POINT_PRECISION.html" title="constant sams::FIXED_POINT_PRECISION">FIXED_<wbr>POINT_<wbr>PRECISION</a></dt><dd>Fixed-point precision (hundredths)</dd><dt><a class="constant" href="constant.VERSION.html" title="constant sams::VERSION">VERSION</a></dt><dd>Library version</dd></dl><h2 id="types" class="section-header">Type Aliases<a href="#types" class="anchor">§</a></h2><dl class="item-table"><dt><a class="type" href="type.Result.html" title="type sams::Result">Result</a></dt><dd>Result type for SAMS operations</dd></dl></section></div></main></body></html>

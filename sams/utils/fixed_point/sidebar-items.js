@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["add_fixed","avg_fixed","div_fixed","f64_to_fixed","fixed_to_f64","mul_fixed","percentage_change","round_to_precision","string_to_fixed","sub_fixed"]};

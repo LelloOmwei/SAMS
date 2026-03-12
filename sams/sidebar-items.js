@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"constant":["ATOM_SIZE","FIXED_POINT_PRECISION","VERSION"],"mod":["codec","shield","transport","types","utils"],"type":["Result"]};

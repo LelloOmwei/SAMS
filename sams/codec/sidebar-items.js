@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"constant":["CODEC_VERSION"],"enum":["CodecError"],"struct":["AtomCodec","AtomIterator","BatchCodec","BatchResult","CowAtom","DecodedAtom"]};

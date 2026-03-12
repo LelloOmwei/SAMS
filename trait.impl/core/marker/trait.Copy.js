@@ -1,0 +1,9 @@
+(function() {
+    const implementors = Object.fromEntries([["sams",[["impl <a class=\"trait\" href=\"https://doc.rust-lang.org/1.94.0/core/marker/trait.Copy.html\" title=\"trait core::marker::Copy\">Copy</a> for <a class=\"enum\" href=\"sams/shield/enum.AnonymizationLevel.html\" title=\"enum sams::shield::AnonymizationLevel\">AnonymizationLevel</a>",0],["impl <a class=\"trait\" href=\"https://doc.rust-lang.org/1.94.0/core/marker/trait.Copy.html\" title=\"trait core::marker::Copy\">Copy</a> for <a class=\"enum\" href=\"sams/shield/enum.ObfuscationStrategy.html\" title=\"enum sams::shield::ObfuscationStrategy\">ObfuscationStrategy</a>",0],["impl <a class=\"trait\" href=\"https://doc.rust-lang.org/1.94.0/core/marker/trait.Copy.html\" title=\"trait core::marker::Copy\">Copy</a> for <a class=\"struct\" href=\"sams/types/struct.SemanticAtom.html\" title=\"struct sams::types::SemanticAtom\">SemanticAtom</a>",0]]]]);
+    if (window.register_implementors) {
+        window.register_implementors(implementors);
+    } else {
+        window.pending_implementors = implementors;
+    }
+})()
+//{"start":59,"fragment_lengths":[860]}

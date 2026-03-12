@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["ValidationResult"],"fn":["is_valid","validate_comprehensive","validate_structure","validate_temporal_consistency","validate_value_ranges"]};
