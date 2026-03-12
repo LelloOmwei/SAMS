@@ -27,37 +27,37 @@
 //! ## Memory Layout Guarantees
 //!
 //! The SemanticAtom uses `#[repr(C)]` to ensure:
-//! - **Deterministic layout**: Same memory layout across all platforms
-//! - **FFI compatibility**: Safe to pass across language boundaries
-//! - **Zero-copy serialization**: Direct byte access without copying
-//! - **Cache alignment**: Optimized for modern processor caches
+// - **Deterministic layout**: Same memory layout across all platforms
+// - **FFI compatibility**: Safe to pass across language boundaries
+// - **Zero-copy serialization**: Direct byte access without copying
+// - **Cache alignment**: Optimized for modern processor caches
+//
+// ## Fixed-Point Arithmetic
+//
+// Values are stored as fixed-point numbers with hundredths precision:
+// - **Storage**: u32 representing value × 100
+// - **Range**: 0.00 to 42,949,672.95
+// - **Precision**: ±0.01 units
+// - **Performance**: No floating-point operations required
+//
+// ## Telemetry Types
+//
+// Standardized telemetry type identifiers ensure interoperability:
 //!
-//! ## Fixed-Point Arithmetic
-//!
-//! Values are stored as fixed-point numbers with hundredths precision:
-//! - **Storage**: u32 representing value × 100
-//! - **Range**: 0.00 to 42,949,672.95
-//! - **Precision**: ±0.01 units
-//! - **Performance**: No floating-point operations required
-//!
-//! ## Telemetry Types
-//!
-//! Standardized telemetry type identifiers ensure interoperability:
-//!
-//! | Type | Hex | Unit | Range | Example |
-//! |------|-----|------|-------|---------|
-//! | Temperature | 0x0002 | °C | -50 to 100 | 22.5°C |
-//! | Humidity | 0x0003 | % | 0 to 100 | 45.0% |
-//! | Pressure | 0x0004 | Pa | 80000-120000 | 101325Pa |
-//! | CO2 | 0x0006 | ppm | 0-10000 | 450ppm |
-//!
-//! ## Trust Levels
-//!
-//! Trust levels indicate data verification status:
-//! - **RAW (0x00)**: Unverified sensor data
-//! - **VERIFIED (0x01)**: Basic validation performed
-//! - **ANOMALY (0x02)**: Flagged as anomalous
-//! - **ENTERPRISE (0xFF)**: Enterprise-grade verified data
+/// | Type | Hex | Unit | Range | Example |
+/// |------|-----|------|-------|---------|
+/// | Temperature | 0x0002 | °C | -50 to 100 | 22.5°C |
+/// | Humidity | 0x0003 | % | 0 to 100 | 45.0% |
+/// | Pressure | 0x0004 | Pa | 80000-120000 | 101325Pa |
+/// | CO2 | 0x0006 | ppm | 0-10000 | 450ppm |
+///
+/// ## Trust Levels
+///
+/// Trust levels indicate data verification status:
+/// - **RAW (0x00)**: Unverified sensor data
+/// - **VERIFIED (0x01)**: Basic validation performed
+/// - **ANOMALY (0x02)**: Flagged as anomalous
+/// - **ENTERPRISE (0xFF)**: Enterprise-grade verified data
 //!
 /// ## Usage Examples
 ///
