@@ -61,7 +61,7 @@
 ///
 /// ## Usage Examples
 ///
-/// ```rust, ignore
+/// ```rust,ignore, ignore
 /// use sams::{AtomBuilder, types::telemetry};
 ///
 /// // Create a temperature atom

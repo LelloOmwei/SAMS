@@ -47,7 +47,7 @@
 //!
 //! ### Embedded (no_std)
 //!
-//! ```rust, ignore
+//! ```rust,ignore, ignore
 //! #![no_std]
 //! use sams::{AtomBuilder, Shield, AnonymizationLevel, transmit_atom};
 //!
@@ -67,7 +67,7 @@
 //!
 //! ### Linux (std)
 //!
-//! ```rust, ignore
+//! ```rust,ignore, ignore
 //! use sams::{AtomBuilder, telemetry};
 //!
 //! #[tokio::main]

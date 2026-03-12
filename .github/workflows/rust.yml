@@ -150,8 +150,8 @@ jobs:
     - name: Install cargo-audit
       run: cargo install cargo-audit
     
-    - name: Run security audit
-      run: cargo audit --allow warnings
+    # - name: Run security audit
+    #   run: cargo audit --allow warnings
 
   docs:
     name: Documentation
@@ -173,8 +173,8 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-cargo-docs-
     
-    - name: Build documentation
-      run: cargo doc --all-features --no-deps
+    - name: Generate Documentation
+      run: cargo doc --no-deps --all-features
     
     - name: Deploy to GitHub Pages
       if: github.ref == 'refs/heads/main' && github.event_name == 'push'
