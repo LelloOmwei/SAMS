@@ -5,9 +5,10 @@
 
 use sams::{
     AtomBuilder, SemanticAtom, Result,
-    shield::{Shield, ShieldConfig, AnonymizationLevel}, 
-    transport::{ZenohTransport, IpcBridge, IpcBridgeConfig}
+    shield::{Shield, ShieldConfig, AnonymizationLevel}
 };
+#[cfg(feature = "transport")]
+use sams::transport::{ZenohTransport, IpcBridge, IpcBridgeConfig};
 use sams::types::telemetry;
 #[cfg(feature = "std")]
 use sams::utils::time;
@@ -36,7 +37,15 @@ fn main() -> Result<()> {
             println!("Note: This demo requires async runtime. See README for setup.");
             Ok(())
         }
-        "bridge" => bridge_demo(),
+        "bridge" => {
+            #[cfg(feature = "transport")]
+            { bridge_demo() }
+            #[cfg(not(feature = "transport"))]
+            { 
+                println!("🌉 Bridge demo requires transport feature");
+                Ok(())
+            }
+        },
         "shield" => shield_demo(),
         "batch" => {
             println!("📦 Starting SAMS Batch Demo...");
@@ -66,6 +75,7 @@ fn print_usage() {
 
 // Async functions removed for simplicity - see README for full async examples
 
+#[cfg(feature = "transport")]
 fn bridge_demo() -> Result<()> {
     println!("🌉 Starting SAMS IPC Bridge...");
     

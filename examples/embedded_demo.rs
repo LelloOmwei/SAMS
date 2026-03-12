@@ -6,9 +6,7 @@
 #![no_std]
 #![no_main]
 
-use panic_halt as _;
-use cortex_m_rt::entry;
-use sams::{AtomBuilder, SemanticAtom, Shield, ShieldConfig, AnonymizationLevel};
+use sams::{AtomBuilder, shield::{Shield, ShieldConfig, AnonymizationLevel}};
 
 // Mock hardware functions for demonstration
 mod mock_hardware {
@@ -31,10 +29,10 @@ mod mock_hardware {
     }
 }
 
-#[entry]
-fn main() -> ! {
+#[no_mangle]
+pub extern "C" fn main() -> ! {
     // Initialize SAMS components
-    let shield = Shield::new();
+    let _shield = Shield::new();
     
     // Create shield configuration for data protection
     let shield_config = ShieldConfig {
@@ -74,8 +72,8 @@ fn main() -> ! {
             .build();
         
         // Apply anonymization/protection
-        protected_shield.anonymize_atom(&mut co2_atom).unwrap();
-        protected_shield.anonymize_atom(&mut temp_atom).unwrap();
+        let _ = protected_shield.anonymize_atom(&mut co2_atom);
+        let _ = protected_shield.anonymize_atom(&mut temp_atom);
         
         // Serialize atoms
         let co2_bytes = co2_atom.as_bytes();
@@ -104,113 +102,7 @@ fn get_next_sequence() -> u32 {
 fn delay_loop() {
     // Very basic delay - in real implementation, use hardware timers
     for _ in 0..1_000_000 {
-        cortex_m::asm::nop();
+        // NOP instruction for delay
+        core::hint::spin_loop();
     }
-}
-
-// Alternative: Batch processing example
-#[allow(dead_code)]
-fn batch_processing_example() {
-    let shield = Shield::new();
-    
-    // Read multiple sensor values
-    let sensor_values = [
-        mock_hardware::read_co2_sensor(),
-        mock_hardware::read_temperature_sensor(),
-        75.5, // Mock humidity
-        1013.25, // Mock pressure in hPa
-    ];
-    
-    let timestamp = mock_hardware::get_timestamp();
-    
-    // Create atoms in batch
-    let mut atoms = [
-        // CO2 atom
-        AtomBuilder::new()
-            .entity_id(1)
-            .sequence(get_next_sequence())
-            .value(sensor_values[0])
-            .timestamp_us(timestamp)
-            .node_id(0x0001)
-            .telemetry_type(0x0006)
-            .trust_level(0x01)
-            .build(),
-        // Temperature atom
-        AtomBuilder::new()
-            .entity_id(2)
-            .sequence(get_next_sequence())
-            .value(sensor_values[1])
-            .timestamp_us(timestamp)
-            .node_id(0x0001)
-            .telemetry_type(0x0002)
-            .trust_level(0x01)
-            .build(),
-        // Humidity atom
-        AtomBuilder::new()
-            .entity_id(3)
-            .sequence(get_next_sequence())
-            .value(sensor_values[2])
-            .timestamp_us(timestamp)
-            .node_id(0x0001)
-            .telemetry_type(0x0003)
-            .trust_level(0x01)
-            .build(),
-        // Pressure atom
-        AtomBuilder::new()
-            .entity_id(4)
-            .sequence(get_next_sequence())
-            .value(sensor_values[3])
-            .timestamp_us(timestamp)
-            .node_id(0x0001)
-            .telemetry_type(0x0004)
-            .trust_level(0x01)
-            .build(),
-    ];
-    
-    // Apply protection to all atoms
-    for atom in &mut atoms {
-        shield.anonymize_atom(atom).unwrap();
-    }
-    
-    // Create batch buffer
-    let mut buffer = [0u8; 128]; // 4 atoms × 32 bytes
-    
-    // Encode batch
-    let mut offset = 0;
-    for atom in &atoms {
-        let atom_bytes = atom.as_bytes();
-        buffer[offset..offset + 32].copy_from_slice(atom_bytes);
-        offset += 32;
-    }
-    
-    // Transmit batch
-    mock_hardware::transmit_data(&buffer);
-}
-
-// Example of using PQC signing (when available)
-#[cfg(feature = "pqc")]
-#[allow(dead_code)]
-fn pqc_signing_example() {
-    let mut shield = Shield::new();
-    
-    // Set HMAC key (in real implementation, load from secure storage)
-    let key = b"embedded_pqc_key_32_bytes";
-    shield.set_key(key).unwrap();
-    
-    let atom = AtomBuilder::new()
-        .entity_id(1)
-        .value(450.0)
-        .build();
-    
-    // Create protected packet
-    let packet = shield.create_protected_packet(&atom).unwrap();
-    
-    // Transmit protected packet
-    mock_hardware::transmit_data(&packet);
-    
-    // On the receiving end, you would:
-    // let (received_atom, is_valid) = shield.extract_protected_packet(&received_packet).unwrap();
-    // if is_valid {
-    //     // Process valid atom
-    // }
 }
