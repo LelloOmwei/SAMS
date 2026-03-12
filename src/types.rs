@@ -109,9 +109,9 @@ impl SemanticAtom {
     /// Get the atom as raw bytes
     pub fn as_bytes(&self) -> &[u8] {
         unsafe {
-            std::slice::from_raw_parts(
+            core::slice::from_raw_parts(
                 self as *const SemanticAtom as *const u8,
-                std::mem::size_of::<SemanticAtom>(),
+                core::mem::size_of::<SemanticAtom>(),
             )
         }
     }

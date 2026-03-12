@@ -50,7 +50,7 @@ jobs:
     
     - name: Build (Embedded)
       if: matrix.target != 'x86_64-unknown-linux-gnu'
-      run: cargo build --target ${{ matrix.target }} --features embedded --release
+      run: cargo build --target ${{ matrix.target }} --no-default-features --features embedded --release
     
     - name: Build (Linux)
       if: matrix.target == 'x86_64-unknown-linux-gnu'
@@ -58,7 +58,7 @@ jobs:
     
     - name: Run example
       if: matrix.target == 'x86_64-unknown-linux-gnu'
-      run: cargo run --example hello_atom --release
+      run: cargo run --example minimal --release
 
   security:
     name: Security Audit
