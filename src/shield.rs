@@ -113,7 +113,7 @@ impl Shield {
     #[cfg(feature = "pqc")]
     pub fn set_key(&mut self, key: &[u8]) -> Result<()> {
         if key.len() != 32 {
-            return Err("Invalid key size");
+            return Err("Invalid key size".into());
         }
         self.hmac_key.copy_from_slice(key);
         Ok(())
@@ -187,7 +187,7 @@ impl Shield {
     #[cfg(feature = "pqc")]
     pub fn verify_atom(&self, atom: &SemanticAtom, signature: &[u8]) -> Result<bool> {
         if signature.len() != 32 {
-            return Err("Invalid signature");
+            return Err("Invalid signature".into());
         }
 
         let expected_signature = self.sign_atom(atom)?;
@@ -212,7 +212,7 @@ impl Shield {
     #[cfg(feature = "pqc")]
     pub fn extract_protected_packet(&self, packet: &[u8]) -> Result<(SemanticAtom, bool)> {
         if packet.len() != crate::ATOM_SIZE + 32 {
-            return Err("Buffer size error");
+            return Err("Buffer size error".into());
         }
 
         let atom_data = &packet[..crate::ATOM_SIZE];

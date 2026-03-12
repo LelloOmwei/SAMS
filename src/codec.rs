@@ -39,7 +39,7 @@ impl std::error::Error for CodecError {}
 pub const CODEC_VERSION: u8 = 1;
 
 /// Atom codec with zero-copy operations
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct AtomCodec {
     /// Enable checksum verification
     enable_checksum: bool,
