@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":["IpcBridge","IpcBridgeConfig","IpcBridgeStats","TransportConfig","TransportStats","ZenohSubscriber","ZenohTransport"]};
+window.SIDEBAR_ITEMS = {"trait":["SamsTransport"]};

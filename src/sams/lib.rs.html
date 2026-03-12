@@ -157,16 +157,16 @@
 <a href=#157 id=157 data-nosnippet>157</a>//! Licensed under either [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0) or [MIT](https://opensource.org/licenses/MIT) at your option.
 <a href=#158 id=158 data-nosnippet>158</a>
 <a href=#159 id=159 data-nosnippet>159</a></span><span class="kw">pub mod </span>types;
-<a href=#160 id=160 data-nosnippet>160</a><span class="kw">pub mod </span>shield;
-<a href=#161 id=161 data-nosnippet>161</a><span class="kw">pub mod </span>codec;
+<a href=#160 id=160 data-nosnippet>160</a><span class="comment">// pub mod shield;  // TODO: Re-enable for Milestone T2
+<a href=#161 id=161 data-nosnippet>161</a>// pub mod codec;   // TODO: Re-enable for Milestone T3
 <a href=#162 id=162 data-nosnippet>162</a>
-<a href=#163 id=163 data-nosnippet>163</a><span class="attr">#[cfg(feature = <span class="string">"transport"</span>)]
+<a href=#163 id=163 data-nosnippet>163</a></span><span class="attr">#[cfg(feature = <span class="string">"transport"</span>)]
 <a href=#164 id=164 data-nosnippet>164</a></span><span class="kw">pub mod </span>transport;
 <a href=#165 id=165 data-nosnippet>165</a>
 <a href=#166 id=166 data-nosnippet>166</a><span class="kw">pub mod </span>utils;
 <a href=#167 id=167 data-nosnippet>167</a>
 <a href=#168 id=168 data-nosnippet>168</a><span class="comment">// Re-export core types for convenience
-<a href=#169 id=169 data-nosnippet>169</a></span><span class="kw">pub use </span>types::{SemanticAtom, AtomBuilder, EntityId, TelemetryType, TrustLevel};
+<a href=#169 id=169 data-nosnippet>169</a></span><span class="kw">pub use </span>types::{SemanticAtom, EntityId, TelemetryType, TrustLevel};
 <a href=#170 id=170 data-nosnippet>170</a>
 <a href=#171 id=171 data-nosnippet>171</a><span class="doccomment">/// Result type for SAMS operations
 <a href=#172 id=172 data-nosnippet>172</a></span><span class="attr">#[cfg(feature = <span class="string">"std"</span>)]

@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"constant":["ANOMALY","ENTERPRISE","RAW","VERIFIED"]};
+window.SIDEBAR_ITEMS = {"constant":["CRITICAL","HIGH","LOW","MAXIMUM","MEDIUM","UNTRUSTED"]};

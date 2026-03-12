@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"enum":["AnonymizationLevel","ObfuscationStrategy","ShieldError"],"struct":["Shield","ShieldConfig"]};
