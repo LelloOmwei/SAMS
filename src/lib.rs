@@ -160,8 +160,8 @@ pub mod types;
 // pub mod shield;  // TODO: Re-enable for Milestone T2
 // pub mod codec;   // TODO: Re-enable for Milestone T3
 
-#[cfg(feature = "transport")]
-pub mod transport;
+// #[cfg(feature = "transport")]
+// pub mod transport;  // TODO: Re-enable for Milestone T1
 
 pub mod utils;
 
