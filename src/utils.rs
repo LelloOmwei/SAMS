@@ -161,10 +161,14 @@ pub mod time {
         #[cfg(feature = "std")]
         {
             let now = now_us();
-            return timestamp >= now.saturating_sub(_window_us);
+            timestamp >= now.saturating_sub(_window_us)
         }
-        // Fallback: just check if timestamp is reasonable
-        timestamp > 0
+        
+        #[cfg(not(feature = "std"))]
+        {
+            // Fallback: just check if timestamp is reasonable
+            timestamp > 0
+        }
     }
 }
 
